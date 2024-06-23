@@ -8,7 +8,13 @@ const Home = () => {
   return (
     <>
       <MaxWidthWrapper>
-        <nav className="w-full flex justify-between">
+        <h1 className="text-balance font-urban text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[66px]">
+          Kick off with a bang with{" "}
+          <span className="text-gradient_indigo-purple font-extrabold">
+            SaaS Starter
+          </span>
+        </h1>
+        {/* <nav className="w-full flex justify-between">
           <div className="text-3xl font-semibold">
             <span className="text-gradient">Resume</span>Link
           </div>
@@ -34,7 +40,7 @@ const Home = () => {
             </div>
             <Button className="bg-primary-gradient w-fit">Get Started</Button>
           </div>
-        </section>
+        </section> */}
       </MaxWidthWrapper>
     </>
   );
