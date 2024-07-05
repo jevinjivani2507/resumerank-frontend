@@ -15,28 +15,28 @@ interface FeatureProps {
 const features: FeatureProps[] = [
   {
     icon: <MedalIcon />,
-    title: "Accessibility",
+    title: "Upload Your Resume",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
-  },
-  {
-    icon: <MapIcon />,
-    title: "Community",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
-  },
-  {
-    icon: <PlaneIcon />,
-    title: "Scalability",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Drag and drop your resume or upload it in one click. Let us take care of parsing your skills and experience effortlessly.",
   },
   {
     icon: <GiftIcon />,
-    title: "Gamification",
+    title: "Get Your Keywords",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Our AI-powered engine dives deep into your resume, extracting powerful keywords that reflect your unique skills and expertise.",
   },
+  {
+    icon: <PlaneIcon />,
+    title: "Receive Job Matches",
+    description:
+      "Experience precise, handpicked job matches tailored to your profile. Get exclusive job listings straight to your inbox.",
+  },
+  //   {
+  //     icon: <MapIcon />,
+  //     title: "Gamification",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+  //   },
 ];
 
 const HowItWorks = () => {
@@ -54,7 +54,7 @@ const HowItWorks = () => {
         dolor pariatur sit!
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {features.map(({ icon, title, description }: FeatureProps) => (
           <Card key={title} className="bg-muted/50">
             <CardHeader>

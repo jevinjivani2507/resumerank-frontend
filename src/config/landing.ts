@@ -2,25 +2,38 @@ import { InfoLdg } from "@/types";
 
 export const infos: InfoLdg[] = [
   {
-    title: "Empower your projects",
+    title: "Empower your Job Search",
     description:
-      "Unlock the full potential of your projects with our open-source SaaS platform. Collaborate seamlessly, innovate effortlessly, and scale limitlessly.",
+      "Our AI analyzes your resume and matches you with jobs perfectly suited to your skills and experience.",
     image: "/images/work-from-home.jpg",
     list: [
       {
-        title: "Collaborative",
+        title: "Smart Job Matching",
         description: "Work together with your team members in real-time.",
         icon: "laptop",
       },
       {
-        title: "Innovative",
-        description: "Stay ahead of the curve with access constant updates.",
+        title: "Daily Job Alerts",
+        description:
+          "Receive daily job recommendations straight to your inbox, ensuring you never miss an opportunity.",
         icon: "settings",
       },
       {
-        title: "Scalable",
+        title: "Resume Parsing",
         description:
-          "Our platform offers the scalability needed to adapt to your needs.",
+          "Upload your resume, and we’ll extract key skills and qualifications to match you with the best jobs.",
+        icon: "search",
+      },
+      {
+        title: "User-Friendly Dashboard",
+        description:
+          "Manage your job search with ease from our intuitive and easy-to-use dashboard.",
+        icon: "search",
+      },
+      {
+        title: "Trusted Job Sources",
+        description:
+          "Get job postings from top trusted sources like LinkedIn, Indeed, and more.",
         icon: "search",
       },
     ],

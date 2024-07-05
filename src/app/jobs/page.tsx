@@ -1,4 +1,4 @@
-import MaxWidthWrapper from "@/components/max-width-wrapper";
+import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import JobContainer from "@/components/job-container";
 import { dummyJobs } from "@/constants/locales";
 const Jobs = () => {

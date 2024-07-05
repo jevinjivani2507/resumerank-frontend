@@ -41,6 +41,7 @@ export default function InfoLanding({
             })}
           </dl>
         </div>
+
         <div
           className={cn(
             "overflow-hidden rounded-xl border lg:-m-4",
@@ -58,7 +59,6 @@ export default function InfoLanding({
             />
           </div>
         </div>
-        {/* </div> */}
       </MaxWidthWrapper>
     </div>
   );
