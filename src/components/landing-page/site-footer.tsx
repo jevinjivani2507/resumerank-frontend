@@ -31,9 +31,9 @@ const SiteFooter = ({ className }: React.HTMLAttributes<HTMLElement>) => {
             </ul>
           </div>
         ))}
-        <div className="flex flex-col  items-end md:col-span-2">
-          {/* <NewsletterForm /> */}
-        </div>
+        {/* <div className="flex flex-col  items-end md:col-span-2"> */}
+        {/* <NewsletterForm /> */}
+        {/* </div> */}
       </div>
     </footer>
   );

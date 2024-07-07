@@ -5,13 +5,12 @@ import { cn } from "@/lib/utils";
 import { fontHeading, fontSans, fontUrban } from "@/assets/fonts";
 import { ThemeProvider } from "next-themes";
 import { NavBar } from "@/components/layout/navbar";
-import { SiteFooter } from "@/components/layout/site-footer";
 import { NavMobile } from "@/components/layout/mobile-nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Resume Link",
+  title: "Resume Rank",
   description:
     "Transform your resume into a keyword-rich tool and receive daily job alerts tailored to you",
 };

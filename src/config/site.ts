@@ -1,7 +1,8 @@
 import { SidebarNavItem, SiteConfig } from "@/types";
 import { env } from "@/env.mjs";
 
-const site_url = env.NEXT_PUBLIC_APP_URL;
+// const site_url = env.NEXT_PUBLIC_APP_URL;
+const site_url = "https://resume-rank.vercel.app";
 
 export const siteConfig: SiteConfig = {
   name: "SaaS Starter",

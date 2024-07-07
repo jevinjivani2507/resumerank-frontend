@@ -6,7 +6,7 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 
-import { siteConfig } from "@/config/site";
+// import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/shared/icons";
 
@@ -18,15 +18,15 @@ export function NavMobile() {
   const dashBoard = selectedLayout === "dashboard";
   const documentation = selectedLayout === "docs";
   const links = [
-    {
-      title: "Documentation",
-      href: "/docs",
-    },
-    {
-      title: "Support",
-      href: "/support",
-      disabled: true,
-    },
+    // {
+    //   title: "Documentation",
+    //   href: "/docs",
+    // },
+    // {
+    //   title: "Support",
+    //   href: "/support",
+    //   disabled: true,
+    // },
   ];
 
   // prevent body scroll when modal is open
@@ -65,7 +65,7 @@ export function NavMobile() {
         )}
       >
         <ul className="grid divide-y divide-muted">
-          {links.map(({ title, href }: { title: string; href: string }) => (
+          {/* {links.map(({ title, href }: { title: string; href: string }) => (
             <li key={href} className="py-3">
               <Link
                 href={href}
@@ -75,7 +75,7 @@ export function NavMobile() {
                 {title}
               </Link>
             </li>
-          ))}
+          ))} */}
 
           {session ? (
             <li className="py-3">
@@ -110,10 +110,10 @@ export function NavMobile() {
         </ul>
 
         <div className="mt-5 flex items-center justify-end space-x-4">
-          <Link href={siteConfig.links.github} target="_blank" rel="noreferrer">
+          {/* <Link href={siteConfig.links.github} target="_blank" rel="noreferrer">
             <Icons.gitHub className="size-6" />
             <span className="sr-only">GitHub</span>
-          </Link>
+          </Link> */}
           <ModeToggle />
         </div>
       </nav>

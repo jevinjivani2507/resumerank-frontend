@@ -11,7 +11,7 @@ import { Icons } from "@/components/shared/icons";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { siteConfig } from "@/config/site";
+// import { siteConfig } from "@/config/site";
 import { useScroll } from "@/components/hooks/use-scroll";
 import { cn } from "@/lib/utils";
 
@@ -32,15 +32,15 @@ export function NavBar({ scroll = false }: NavBarProps) {
   const dashBoard = selectedLayout === "dashboard";
   const documentation = selectedLayout === "docs";
   const links = [
-    {
-      title: "Documentation",
-      href: "/docs",
-    },
-    {
-      title: "Support",
-      href: "/support",
-      disabled: true,
-    },
+    // {
+    //   title: "Documentation",
+    //   href: "/docs",
+    // },
+    // {
+    //   title: "Support",
+    //   href: "/support",
+    //   disabled: true,
+    // },
   ];
 
   return (
@@ -57,11 +57,12 @@ export function NavBar({ scroll = false }: NavBarProps) {
           <Link href="/" className="flex items-center space-x-2">
             <Icons.logo />
             <span className="font-urban text-xl font-bold">
-              {siteConfig.name}
+              {/* {siteConfig.name} */}
+              <span className="text-primary">Resume</span> Rank
             </span>
           </Link>
 
-          {links && links.length > 0 ? (
+          {/* {links && links.length > 0 ? (
             <nav className="hidden gap-6 md:flex">
               {links.map((item, index) => (
                 <Link
@@ -80,7 +81,7 @@ export function NavBar({ scroll = false }: NavBarProps) {
                 </Link>
               ))}
             </nav>
-          ) : null}
+          ) : null} */}
         </div>
 
         <div className="flex items-center space-x-3">
@@ -94,22 +95,22 @@ export function NavBar({ scroll = false }: NavBarProps) {
                 <Icons.search className="size-6 text-muted-foreground" />
               </div>
               <div className="flex space-x-4">
-                <Link
+                {/* <Link
                   href={siteConfig.links.github}
                   target="_blank"
                   rel="noreferrer"
                 >
                   <Icons.gitHub className="size-7" />
                   <span className="sr-only">GitHub</span>
-                </Link>
+                </Link> */}
               </div>
             </div>
           ) : null}
 
-          {session ? (
+          {/* {session ? (
             <>
               {dashBoard ? (
-                <UserAccountNav user={session.user} />
+                <UserAccountNav user={session?.user} />
               ) : (
                 <Link href="/dashboard" className="hidden md:block">
                   <Button
@@ -142,7 +143,17 @@ export function NavBar({ scroll = false }: NavBarProps) {
                 <Skeleton className="h-9 w-24 rounded-full" />
               )}
             </div>
-          )}
+          )} */}
+          <Button
+            className="hidden gap-2 px-4 md:flex rounded-full"
+            variant="default"
+            size="sm"
+            rounded="full"
+            onClick={() => setShowSignInModal(true)}
+          >
+            <span>Sign In</span>
+            <Icons.arrowRight className="size-4" />
+          </Button>
         </div>
       </MaxWidthWrapper>
     </header>
