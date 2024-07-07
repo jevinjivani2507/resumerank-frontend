@@ -14,8 +14,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 // import { siteConfig } from "@/config/site";
 import { useScroll } from "@/components/hooks/use-scroll";
 import { cn } from "@/lib/utils";
-
+import { useRouter } from "next/navigation";
 import { UserAccountNav } from "./user-account-nav";
+import { usePathname } from "next/navigation";
 
 interface NavBarProps {
   scroll?: boolean;
@@ -23,6 +24,9 @@ interface NavBarProps {
 }
 
 export function NavBar({ scroll = false }: NavBarProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const scrolled = useScroll(50);
   // const { data: session, status } = useSession();
   const session = null;
@@ -144,16 +148,19 @@ export function NavBar({ scroll = false }: NavBarProps) {
               )}
             </div>
           )} */}
-          <Button
-            className="hidden gap-2 px-4 md:flex rounded-full"
-            variant="default"
-            size="sm"
-            rounded="full"
-            onClick={() => setShowSignInModal(true)}
-          >
-            <span>Sign In</span>
-            <Icons.arrowRight className="size-4" />
-          </Button>
+
+          {pathname === "/" && (
+            <Button
+              className="hidden gap-2 px-4 md:flex rounded-full"
+              variant="default"
+              size="sm"
+              rounded="full"
+              onClick={() => router.push("/jobs")}
+            >
+              <span>Sign In</span>
+              <Icons.arrowRight className="size-4" />
+            </Button>
+          )}
         </div>
       </MaxWidthWrapper>
     </header>
