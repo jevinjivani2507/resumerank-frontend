@@ -2,25 +2,15 @@
 
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import JobContainer from "@/components/job-container";
-import { dummyJobs } from "@/constants/locales";
-import { genericMutationFetcher } from "@/utils/helpers/swr.helpers";
-import API_CONSTANTS from "@/utils/apiConstants";
-import useSWRMutation from "swr/mutation";
 import { useJob } from "@/hooks/jobs.swr";
-import UploadResume from "@/components/upload-resume";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const Jobs = () => {
-  const { userJobs, isUserJobsLoading, errorFetchingUserJobs } = useJob(
-    "kjeeInWBo4P1572KnXXkiv62x2F3"
-  );
+  const [userId, setUserId] = useLocalStorage<string>("user_id");
+
+  const { userJobs, isUserJobsLoading, errorFetchingUserJobs } = useJob(userId);
 
   console.log(userJobs, isUserJobsLoading, errorFetchingUserJobs);
-
-  // const { trigger: uploadResume, isMutating: isResumeUploading } =
-  //   useSWRMutation(
-  //     API_CONSTANTS.UPLOAD_RESUME("MguLjuIPMPeMa9kZUz6ZfVkT2B43"),
-  //     genericMutationFetcher
-  //   );
 
   return (
     <MaxWidthWrapper>
@@ -35,6 +25,7 @@ const Jobs = () => {
           </div>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
             {!isUserJobsLoading &&
+              !errorFetchingUserJobs &&
               userJobs.map((job, index) => (
                 <JobContainer key={index} {...job} />
               ))}

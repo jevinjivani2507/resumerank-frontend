@@ -3,19 +3,8 @@
 import { useState } from "react";
 
 // The useLocalStorage hook
-function useLocalStorage<T>(key: string, initialValue: T) {
-  // Retrieve the initial value from localStorage or set it to the initialValue
-  const storedValue = () => {
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? (JSON.parse(item) as T) : initialValue;
-    } catch (error) {
-      console.error(`Error reading localStorage key “${key}”:`, error);
-      return initialValue;
-    }
-  };
-
-  const [stored, setStored] = useState<T>(storedValue);
+function useLocalStorage<T>(key: string) {
+  const [stored, setStored] = useState<T>(null as unknown as T);
 
   const setValue = (value: T | ((val: T) => T)) => {
     try {

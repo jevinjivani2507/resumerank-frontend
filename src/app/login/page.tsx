@@ -16,12 +16,16 @@ import { useRouter } from "next/navigation";
 import { genericMutationFetcher } from "@/utils/helpers/swr.helpers";
 import API_CONSTANTS from "@/utils/apiConstants";
 import useSWRMutation from "swr/mutation";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const LoginForm = () => {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [token, setToken] = useLocalStorage<string>("token");
+  const [userId, setUserId] = useLocalStorage<string>("user_id");
 
   const { trigger: login, isMutating: isLoggingIn } = useSWRMutation(
     API_CONSTANTS.LOGIN,
@@ -39,6 +43,8 @@ const LoginForm = () => {
       ],
     }).then((res) => {
       console.log(res);
+      setToken(res.data.token);
+      setUserId(res.data.user_id);
       router.push("/jobs");
     });
   };

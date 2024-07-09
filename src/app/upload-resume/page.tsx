@@ -13,6 +13,8 @@ import { genericMutationFetcher } from "@/utils/helpers/swr.helpers";
 import API_CONSTANTS from "@/utils/apiConstants";
 import useSWRMutation from "swr/mutation";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { useRouter } from "next/navigation";
 
 const FileSvgDraw = () => {
   return (
@@ -44,8 +46,10 @@ const FileSvgDraw = () => {
 };
 
 const UploadResume = () => {
-  const [files, setFiles] = useState<File[] | null>(null);
+  const router = useRouter();
 
+  const [files, setFiles] = useState<File[] | null>(null);
+  const [userId, setUserId] = useLocalStorage<string>("user_id");
   const dropZoneConfig = {
     maxFiles: 1,
     maxSize: 1024 * 1024 * 4,
@@ -53,7 +57,7 @@ const UploadResume = () => {
   };
 
   const { trigger: uploadResume, isMutating: isLoggingIn } = useSWRMutation(
-    API_CONSTANTS.UPLOAD_RESUME("2oyLzVCeHCTM6xLjrcSqXwjiH9F3"),
+    API_CONSTANTS.UPLOAD_RESUME(userId),
     genericMutationFetcher
   );
 
@@ -71,6 +75,7 @@ const UploadResume = () => {
       rest: [form],
     }).then((res) => {
       console.log(res);
+      router.push("/jobs");
     });
   };
 
