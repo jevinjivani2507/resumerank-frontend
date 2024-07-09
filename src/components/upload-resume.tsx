@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import {
   FileUploader,
@@ -8,11 +6,11 @@ import {
   FileInput,
 } from "@/components/file-uploader";
 import { Paperclip } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
 import { genericMutationFetcher } from "@/utils/helpers/swr.helpers";
 import API_CONSTANTS from "@/utils/apiConstants";
 import useSWRMutation from "swr/mutation";
-import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
+import { Console } from "console";
 
 const FileSvgDraw = () => {
   return (
@@ -47,9 +45,9 @@ const UploadResume = () => {
   const [files, setFiles] = useState<File[] | null>(null);
 
   const dropZoneConfig = {
-    maxFiles: 1,
+    maxFiles: 5,
     maxSize: 1024 * 1024 * 4,
-    multiple: false,
+    multiple: true,
   };
 
   const { trigger: uploadResume, isMutating: isLoggingIn } = useSWRMutation(
@@ -66,48 +64,43 @@ const UploadResume = () => {
 
     console.log(form);
 
-    uploadResume({
-      type: "post",
-      rest: [form],
-    }).then((res) => {
-      console.log(res);
-    });
+    // uploadResume({
+    //   type: "post",
+    // });
   };
 
   return (
-    <MaxWidthWrapper>
-      <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-semibold">Upload Resume</h1>
+    <div className="flex flex-col gap-4">
+      <h1 className="text-3xl font-semibold">Upload Resume</h1>
 
-        <div className="w-2/3 p-2 border-2 rounded-md h-full bg-white">
-          <FileUploader
-            value={files}
-            onValueChange={setFiles}
-            dropzoneOptions={dropZoneConfig}
-            className="relative bg-background rounded-lg p-2"
-          >
-            <FileInput className="outline-dashed outline-1 outline-white">
-              <div className="flex items-center justify-center flex-col pt-3 pb-4 w-full ">
-                <FileSvgDraw />
-              </div>
-            </FileInput>
-            <FileUploaderContent>
-              {files &&
-                files.length > 0 &&
-                files.map((file, i) => (
-                  <FileUploaderItem key={i} index={i}>
-                    <Paperclip className="h-4 w-4 stroke-current" />
-                    <span>{file.name}</span>
-                  </FileUploaderItem>
-                ))}
-            </FileUploaderContent>
-          </FileUploader>
-        </div>
-        <Button className="w-fit" onClick={handleSubmit}>
-          Upload
-        </Button>
+      <div className="w-2/3 p-2 border-2 rounded-md h-full bg-white">
+        <FileUploader
+          value={files}
+          onValueChange={setFiles}
+          dropzoneOptions={dropZoneConfig}
+          className="relative bg-background rounded-lg p-2"
+        >
+          <FileInput className="outline-dashed outline-1 outline-white">
+            <div className="flex items-center justify-center flex-col pt-3 pb-4 w-full ">
+              <FileSvgDraw />
+            </div>
+          </FileInput>
+          <FileUploaderContent>
+            {files &&
+              files.length > 0 &&
+              files.map((file, i) => (
+                <FileUploaderItem key={i} index={i}>
+                  <Paperclip className="h-4 w-4 stroke-current" />
+                  <span>{file.name}</span>
+                </FileUploaderItem>
+              ))}
+          </FileUploaderContent>
+        </FileUploader>
       </div>
-    </MaxWidthWrapper>
+      <Button className="w-fit" onClick={handleSubmit}>
+        Upload
+      </Button>
+    </div>
   );
 };
 

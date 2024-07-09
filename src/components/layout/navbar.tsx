@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 // import { DocsSearch } from "@/components/docs/search";
 import { ModalContext } from "@/components/modals/providers";
@@ -46,6 +46,11 @@ export function NavBar({ scroll = false }: NavBarProps) {
     //   disabled: true,
     // },
   ];
+
+  const handleClick = () => {
+    console.log("clicked");
+    setShowSignInModal(true);
+  };
 
   return (
     <header
@@ -150,16 +155,27 @@ export function NavBar({ scroll = false }: NavBarProps) {
           )} */}
 
           {pathname === "/" && (
-            <Button
-              className="hidden gap-2 px-4 md:flex rounded-full"
-              variant="default"
-              size="sm"
-              rounded="full"
-              onClick={() => router.push("/jobs")}
-            >
-              <span>Sign In</span>
-              <Icons.arrowRight className="size-4" />
-            </Button>
+            <>
+              <Button
+                className="hidden gap-2 px-4 md:flex rounded-full"
+                variant="outline"
+                size="sm"
+                rounded="full"
+                onClick={() => router.push("/login")}
+              >
+                <span>Login</span>
+              </Button>
+              <Button
+                className="hidden gap-2 px-4 md:flex rounded-full"
+                variant="default"
+                size="sm"
+                rounded="full"
+                onClick={() => router.push("/signup")}
+              >
+                <span>Sign In</span>
+                <Icons.arrowRight className="size-4" />
+              </Button>
+            </>
           )}
         </div>
       </MaxWidthWrapper>

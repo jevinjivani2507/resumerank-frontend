@@ -6,7 +6,8 @@ import { fontHeading, fontSans, fontUrban } from "@/assets/fonts";
 import { ThemeProvider } from "next-themes";
 import { NavBar } from "@/components/layout/navbar";
 import { NavMobile } from "@/components/layout/mobile-nav";
-
+import ModalProvider from "@/components/modals/providers";
+import { SessionProvider } from "next-auth/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
