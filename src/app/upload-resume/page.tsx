@@ -15,7 +15,7 @@ import useSWRMutation from "swr/mutation";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useRouter } from "next/navigation";
-
+import { useToast } from "@/components/ui/use-toast";
 const FileSvgDraw = () => {
   return (
     <>
@@ -47,6 +47,7 @@ const FileSvgDraw = () => {
 
 const UploadResume = () => {
   const router = useRouter();
+  const { toast } = useToast();
 
   const [files, setFiles] = useState<File[] | null>(null);
   const [userId, setUserId] = useLocalStorage<string>("user_id");
@@ -57,26 +58,38 @@ const UploadResume = () => {
   };
 
   const { trigger: uploadResume, isMutating: isLoggingIn } = useSWRMutation(
-    API_CONSTANTS.UPLOAD_RESUME(userId),
+    API_CONSTANTS.UPLOAD_RESUME(userId || ""),
     genericMutationFetcher
   );
 
   const handleSubmit = () => {
     const form = new FormData();
 
-    console.log(files);
-
     if (files !== null) form.append("file", files[0]);
 
-    console.log(form);
+    if (userId === null) {
+      alert("User not found");
+      return;
+    }
 
     uploadResume({
       type: "post",
       rest: [form],
-    }).then((res) => {
-      console.log(res);
-      router.push("/jobs");
-    });
+    })
+      .then((res) => {
+        console.log(res);
+        toast({
+          title: "Resume Uploaded Successfully",
+        });
+        router.push("/jobs");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({
+          title: "Error Uploading Resume",
+          variant: "destructive",
+        });
+      });
   };
 
   return (

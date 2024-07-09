@@ -4,18 +4,25 @@ import { useState } from "react";
 
 // The useLocalStorage hook
 function useLocalStorage<T>(key: string) {
-  const [stored, setStored] = useState<T>(null as unknown as T);
+  const [stored, setStored] = useState<T | null>(() => {
+    if (typeof window === "undefined") return null;
 
-  const setValue = (value: T | ((val: T) => T)) => {
+    const storedValue = JSON.parse(localStorage.getItem(key) || "null");
+    return storedValue ?? null;
+  });
+
+  const setValue = (value: T | null) => {
     try {
-      // Allow value to be a function so we have the same API as useState
-      const valueToStore = value instanceof Function ? value(stored) : value;
-      // Save state
-      setStored(valueToStore);
+      // Save to state
+      setStored(value);
       // Save to local storage
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      window.localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-      console.error(`Error setting localStorage key “${key}”:`, error);
+      console.error(
+        `Error setting localStorage
+        key “${key}”:`,
+        error
+      );
     }
   };
 

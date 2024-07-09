@@ -17,19 +17,47 @@ import { genericMutationFetcher } from "@/utils/helpers/swr.helpers";
 import API_CONSTANTS from "@/utils/apiConstants";
 import useSWRMutation from "swr/mutation";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { useToast } from "@/components/ui/use-toast";
 
 const LoginForm = () => {
   const router = useRouter();
+  const { toast } = useToast();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [token, setToken] = useLocalStorage("token");
+  const [userId, setUserId] = useLocalStorage<string>("user_id");
+
   const { trigger: signup, isMutating: isLoggingIn } = useSWRMutation(
     API_CONSTANTS.SIGNUP,
     genericMutationFetcher
   );
 
   const handleSubmit = () => {
+    if (email === "" || password === "") {
+      toast({
+        title: "Please fill in all fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!email.includes("@") || !email.includes(".")) {
+      toast({
+        title: "Please enter a valid email",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      toast({
+        title: "Password must be at least 6 characters",
+        variant: "destructive",
+      });
+      return;
+    }
+
     signup({
       type: "post",
       rest: [
@@ -38,10 +66,22 @@ const LoginForm = () => {
           password,
         },
       ],
-    }).then((res) => {
-      console.log(res);
-      router.push("/login");
-    });
+    })
+      .then((res) => {
+        console.log(res);
+        setUserId(res.data.user_id);
+        toast({
+          title: "Signup Successful",
+        });
+        router.push("/jobs");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({
+          title: "Signup Failed",
+          variant: "destructive",
+        });
+      });
   };
 
   return (
@@ -71,7 +111,7 @@ const LoginForm = () => {
               <Input
                 id="password"
                 type="password"
-                placeholder="********"
+                placeholder="******"
                 required
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}

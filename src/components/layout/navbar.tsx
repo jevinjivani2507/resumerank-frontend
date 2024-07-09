@@ -17,6 +17,8 @@ import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { UserAccountNav } from "./user-account-nav";
 import { usePathname } from "next/navigation";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import path from "path";
 
 interface NavBarProps {
   scroll?: boolean;
@@ -26,6 +28,8 @@ interface NavBarProps {
 export function NavBar({ scroll = false }: NavBarProps) {
   const router = useRouter();
   const pathname = usePathname();
+
+  const [userId, setUserId, removeUserId] = useLocalStorage<string>("user_id");
 
   const scrolled = useScroll(50);
   // const { data: session, status } = useSession();
@@ -50,6 +54,11 @@ export function NavBar({ scroll = false }: NavBarProps) {
   const handleClick = () => {
     console.log("clicked");
     setShowSignInModal(true);
+  };
+
+  const handleLogout = () => {
+    removeUserId();
+    router.push("/");
   };
 
   return (
@@ -154,9 +163,10 @@ export function NavBar({ scroll = false }: NavBarProps) {
             </div>
           )} */}
 
-          {pathname === "/" && (
+          {pathname === "/" ? (
             <>
               <Button
+                id="login"
                 className="hidden gap-2 px-4 md:flex rounded-full"
                 variant="outline"
                 size="sm"
@@ -166,6 +176,7 @@ export function NavBar({ scroll = false }: NavBarProps) {
                 <span>Login</span>
               </Button>
               <Button
+                id="signup"
                 className="hidden gap-2 px-4 md:flex rounded-full"
                 variant="default"
                 size="sm"
@@ -176,6 +187,31 @@ export function NavBar({ scroll = false }: NavBarProps) {
                 <Icons.arrowRight className="size-4" />
               </Button>
             </>
+          ) : (
+            (pathname === "/jobs" || pathname === "/upload-resume") && (
+              <>
+                <Button
+                  id="upload-resume"
+                  className="hidden gap-2 px-4 md:flex rounded-full"
+                  variant="outline"
+                  size="sm"
+                  rounded="full"
+                  onClick={() => router.push("/upload-resume")}
+                >
+                  <span>Upload Resume</span>
+                </Button>
+                <Button
+                  id="logout"
+                  className="hidden gap-2 px-4 md:flex rounded-full"
+                  variant="default"
+                  size="sm"
+                  rounded="full"
+                  onClick={handleLogout}
+                >
+                  <span>Logout</span>
+                </Button>
+              </>
+            )
           )}
         </div>
       </MaxWidthWrapper>

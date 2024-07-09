@@ -9,6 +9,7 @@ import { NavMobile } from "@/components/layout/mobile-nav";
 import ModalProvider from "@/components/modals/providers";
 import { SessionProvider } from "next-auth/react";
 const inter = Inter({ subsets: ["latin"] });
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Resume Rank",
@@ -41,6 +42,7 @@ export default function RootLayout({
             <NavMobile />
             <NavBar scroll={true} />
             {children}
+            <Toaster />
           </ThemeProvider>
         </main>
       </body>

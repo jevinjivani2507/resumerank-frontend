@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,9 +17,11 @@ import { genericMutationFetcher } from "@/utils/helpers/swr.helpers";
 import API_CONSTANTS from "@/utils/apiConstants";
 import useSWRMutation from "swr/mutation";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { useToast } from "@/components/ui/use-toast";
 
 const LoginForm = () => {
   const router = useRouter();
+  const { toast } = useToast();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,12 +29,47 @@ const LoginForm = () => {
   const [token, setToken] = useLocalStorage<string>("token");
   const [userId, setUserId] = useLocalStorage<string>("user_id");
 
+  console.log(userId);
+
+  useEffect(() => {
+    if (userId) {
+      console.log("userId exists");
+      router.push("/jobs");
+    }
+  }, [userId]);
+
   const { trigger: login, isMutating: isLoggingIn } = useSWRMutation(
     API_CONSTANTS.LOGIN,
     genericMutationFetcher
   );
 
   const handleSubmit = () => {
+    if (email === "" || password === "") {
+      toast({
+        title: "Please fill in all fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!email.includes("@") || !email.includes(".")) {
+      toast({
+        title: "Please enter a valid email",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      toast({
+        title: "Password must be at least 6 characters",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // handle error
+
     login({
       type: "post",
       rest: [
@@ -41,13 +78,25 @@ const LoginForm = () => {
           password,
         },
       ],
-    }).then((res) => {
-      console.log(res);
-      setToken(res.data.token);
-      setUserId(res.data.user_id);
-      router.push("/jobs");
-    });
+    })
+      .then((res) => {
+        console.log(res);
+        setToken(res.data.token);
+        setUserId(res.data.user_id);
+        toast({
+          title: "Login Successful",
+        });
+        router.push("/jobs");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({
+          title: "Invalid credentials",
+          variant: "destructive",
+        });
+      });
   };
+
   return (
     <div className="pt-20">
       <Card className="mx-auto max-w-sm">
@@ -84,6 +133,7 @@ const LoginForm = () => {
                 id="password"
                 type="password"
                 required
+                placeholder="******"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
