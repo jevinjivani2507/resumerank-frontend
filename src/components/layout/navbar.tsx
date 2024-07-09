@@ -51,11 +51,6 @@ export function NavBar({ scroll = false }: NavBarProps) {
     // },
   ];
 
-  const handleClick = () => {
-    console.log("clicked");
-    setShowSignInModal(true);
-  };
-
   const handleLogout = () => {
     removeUserId();
     router.push("/");

@@ -29,11 +29,8 @@ const LoginForm = () => {
   const [token, setToken] = useLocalStorage<string>("token");
   const [userId, setUserId] = useLocalStorage<string>("user_id");
 
-  console.log(userId);
-
   useEffect(() => {
     if (userId) {
-      console.log("userId exists");
       router.push("/jobs");
     }
   }, [userId]);

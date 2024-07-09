@@ -20,7 +20,6 @@ const Jobs = () => {
     if (!userId) {
       router.push("/login");
     }
-    console.log(userId);
   }, [userId]);
 
   return (
