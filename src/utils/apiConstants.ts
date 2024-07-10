@@ -9,6 +9,7 @@ class APIConstants {
 
   SIGNUP = this.USER + "/signup";
   LOGIN = this.USER + "/login";
+  GOOGLE_LOGIN = this.USER + "/google/login";
 
   // Resume Endpoints
   UPLOAD_RESUME = (id: string) => this.USER + `/${id}/upload-resume`;

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,6 +18,22 @@ import API_CONSTANTS from "@/utils/apiConstants";
 import useSWRMutation from "swr/mutation";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useToast } from "@/components/ui/use-toast";
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAiNiXfAGomM_syROGSoUBie042uzeHbcI",
+  authDomain: "resume-link-8d4d7.firebaseapp.com",
+  projectId: "resume-link-8d4d7",
+  storageBucket: "resume-link-8d4d7.appspot.com",
+  messagingSenderId: "695942916654",
+  appId: "1:695942916654:web:9146aca10c504e264dcdbf",
+  measurementId: "G-ZT7K3ZS85M",
+  databaseURL: "",
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 const LoginForm = () => {
   const router = useRouter();
@@ -25,6 +41,7 @@ const LoginForm = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState<any>(null);
 
   const [token, setToken] = useLocalStorage<string>("token");
   const [userId, setUserId] = useLocalStorage<string>("user_id");
@@ -94,6 +111,24 @@ const LoginForm = () => {
       });
   };
 
+  const googleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      setUser(user);
+      console.log(user);
+
+      const idToken = await user.getIdToken();
+      console.log(idToken);
+      // Optionally, handle ID tokens here
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle errors here, such as displaying them to the user
+    }
+  };
+
   return (
     <div className="pt-20">
       <Card className="mx-auto max-w-sm">
@@ -139,6 +174,9 @@ const LoginForm = () => {
               Login
             </Button>
           </div>
+          <Button className="w-full mt-4" onClick={googleSignIn}>
+            Login with Google
+          </Button>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
             <Link className="underline" href="/signup">

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Sign-In with Firebase</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  </head>
+  <body>
+    <h1>Google Sign-In with Firebase</h1>
+    <button id="signInButton">Sign In with Google</button>
+    <div id="userInfo" style="display: none">
+      <h2>User Info</h2>
+      <p id="userName"></p>
+      <p id="userEmail"></p>
+      <img id="userPhoto" width="100" />
+    </div>
+
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyAiNiXfAGomM_syROGSoUBie042uzeHbcI",
+        authDomain: "resume-link-8d4d7.firebaseapp.com",
+        projectId: "resume-link-8d4d7",
+        storageBucket: "resume-link-8d4d7.appspot.com",
+        messagingSenderId: "695942916654",
+        appId: "1:695942916654:web:9146aca10c504e264dcdbf",
+        measurementId: "G-ZT7K3ZS85M",
+        databaseURL: "",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      const signInButton = document.getElementById("signInButton");
+      const userInfo = document.getElementById("userInfo");
+      const userName = document.getElementById("userName");
+      const userEmail = document.getElementById("userEmail");
+      const userPhoto = document.getElementById("userPhoto");
+
+      signInButton.addEventListener("click", () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        firebase
+          .auth()
+          .signInWithPopup(provider)
+          .then((result) => {
+            const user = result.user;
+            displayUserInfo(user);
+            return user.getIdToken();
+          })
+          .then((idToken) => {
+            console.log("ID Token:", idToken);
+            // Send the ID token to your backend in the Authorization header
+            return fetch("/api/google/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${idToken}`, // Add the ID token as a Bearer token
+              },
+              // No need to include the token in the body anymore
+            });
+          })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Server response:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      });
+
+      function displayUserInfo(user) {
+        userName.textContent = `Name: ${user.displayName}`;
+        userEmail.textContent = `Email: ${user.email}`;
+        userPhoto.src = user.photoURL;
+        userInfo.style.display = "block";
+        signInButton.style.display = "none";
+      }
+    </script>
+  </body>
+</html>

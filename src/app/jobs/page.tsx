@@ -18,7 +18,7 @@ const Jobs = () => {
 
   useEffect(() => {
     if (!userId) {
-      router.push("/login");
+      router.push("/");
     }
   }, [userId]);
 
