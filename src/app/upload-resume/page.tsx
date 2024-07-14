@@ -121,9 +121,15 @@ const UploadResume = () => {
             </FileUploaderContent>
           </FileUploader>
         </div>
-        <Button className="w-fit" onClick={handleSubmit}>
-          Upload
-        </Button>
+        {isLoggingIn ? (
+          <Button className="w-fit" variant="secondary">
+            Upload
+          </Button>
+        ) : (
+          <Button className="w-fit" onClick={handleSubmit}>
+            Upload
+          </Button>
+        )}
       </div>
     </MaxWidthWrapper>
   );
