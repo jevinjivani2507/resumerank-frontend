@@ -57,7 +57,7 @@ const UploadResume = () => {
     multiple: false,
   };
 
-  const { trigger: uploadResume, isMutating: isLoggingIn } = useSWRMutation(
+  const { trigger: uploadResume, isMutating: isUploading } = useSWRMutation(
     API_CONSTANTS.UPLOAD_RESUME(userId || ""),
     genericMutationFetcher
   );
@@ -121,7 +121,8 @@ const UploadResume = () => {
             </FileUploaderContent>
           </FileUploader>
         </div>
-        <Button className="w-fit" onClick={handleSubmit}>
+
+        <Button className="w-fit" disabled={isUploading} onClick={handleSubmit}>
           Upload
         </Button>
       </div>
