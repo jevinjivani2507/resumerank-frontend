@@ -1,5 +1,5 @@
 class APIConstants {
-  BASE_URL = "https://walrus-app-uxh64.ondigitalocean.app/api";
+  BASE_URL = "https://jellyfish-app-p8x64.ondigitalocean.app/api";
 
   // Controllers
   USER = this.BASE_URL + "";
