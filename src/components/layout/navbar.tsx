@@ -26,6 +26,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import axios from "axios";
+import GoogleIcon from "@/assets/google.svg";
+import Image from "next/image";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAiNiXfAGomM_syROGSoUBie042uzeHbcI",
   authDomain: "resume-link-8d4d7.firebaseapp.com",
@@ -251,14 +254,14 @@ export function NavBar({ scroll = false }: NavBarProps) {
               </Button> */}
               <Button
                 id="signup"
-                className="hidden gap-2 px-4 md:flex rounded-full"
-                variant="default"
+                className="hidden gap-2 px-4 md:flex rounded-full border border-primary"
+                variant="outline"
                 size="sm"
                 rounded="full"
                 onClick={googleSignIn}
               >
                 <span>Google Login</span>
-                <Icons.arrowRight className="size-4" />
+                <Image src={GoogleIcon} alt="" className="h-4 w-4"></Image>
               </Button>
             </>
           ) : (
