@@ -26,7 +26,7 @@
     --radius: 0.5rem;
   }
 
-  .dark {
+  /* [data-theme="dark"] {
     --background: 253 43% 3%;
     --foreground: 253 31% 98%;
     --muted: 253 7% 13%;
@@ -46,7 +46,7 @@
     --destructive: 339.2 90.36% 51.18%;
     --destructive-foreground: 0 0% 100%;
     --ring: 253 91% 58%;
-  }
+  } */
 }
 
 @layer base {
